@@ -1,0 +1,12 @@
+# PlatformIO build files
+.pio/
+
+# VS Code
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Never commit real credentials
+# src/node3_gateway.cpp → WIFI_SSID, WIFI_PASS, MQTT_SERVER
