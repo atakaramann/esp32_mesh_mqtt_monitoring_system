@@ -33,6 +33,12 @@ A mesh-networked sensor system built on ESP32-S3 N16R8 boards using painlessMesh
 
 ---
 
+## Hardware Prototype
+
+The physical prototype was tested with three ESP32-S3 boards, five DS18B20 temperature probes, one DHT21 humidity/temperature sensor and one analog soil moisture sensor.
+
+![Hardware prototype](images/hardware_prototype_labeled.jpg)
+
 ## Hardware
 
 | Component | Model | Qty |
