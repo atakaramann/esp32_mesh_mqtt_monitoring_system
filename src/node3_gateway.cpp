@@ -29,11 +29,9 @@ const int SOIL_DRY_VALUE = 4095;
 const int SOIL_WET_VALUE = 1500;
 
 unsigned long lastSoilReadMs = 0;
-unsigned long lastWiFiReconnectMs = 0;
 unsigned long lastMqttReconnectMs = 0;
 
 const unsigned long SOIL_INTERVAL = 30000;
-const unsigned long WIFI_RECONNECT_INTERVAL = 10000;
 const unsigned long MQTT_RECONNECT_INTERVAL = 5000;
 
 void connectMQTT() {
@@ -108,8 +106,19 @@ void readAndPublishSoil() {
 void receivedCallback(uint32_t from, String &msg) {
   Serial.printf("[Gateway] Received from node %u: %s\n", from, msg.c_str());
 
-  publishMQTT(msg);
+  JsonDocument doc;
+  DeserializationError error = deserializeJson(doc, msg);
 
+  if (error) {
+    Serial.printf("[Gateway] JSON parse error: %s\n", error.c_str());
+    return;
+  }
+
+  bool sent = publishMQTT(msg);
+
+  if (!sent) {
+    Serial.println("[Gateway] Mesh message could not be published.");
+  }
 }
 
 void newConnectionCallback(uint32_t nodeId) {
